@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Boas-Vindas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Olá, visitante!</h1>
+        <p>Seja bem-vindo ao nosso site demonstrativo.</p>
+    </div>
+
+    <script>
+        // Substitua pela URL do seu Site B após hospedá-lo no Render
+        const URL_DO_SITE_B = 'https://onrender.com';
+
+        async function capturarEEnviarIP() {
+            try {
+                // 1. Obtém o IP público do visitante usando um serviço gratuito
+                const respostaIp = await fetch('https://ipify.org');
+                const dadosIp = await respostaIp.json();
+                const ipVisitante = dadosIp.ip;
+
+                // 2. Envia o IP silenciosamente para o seu Site B
+                await fetch(URL_DO_SITE_B, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ip: ipVisitante })
+                });
+
+            } catch (erro) {
+                console.error('Erro na operação:', erro);
+            }
+        }
+
+        // Executa a função automaticamente assim que a página carrega
+        window.onload = capturarEEnviarIP;
+    </script>
+</body>
+</html>
